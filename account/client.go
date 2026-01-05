@@ -9,7 +9,7 @@ import (
 
 type Client struct {
 	conn    *grpc.ClientConn
-	service pb.NewAccountServiceClient
+	service pb.AccountServiceClient
 }
 
 func NewClient(url string) (*Client, error) {
@@ -27,10 +27,10 @@ func (c *Client) Close() {
 }
 
 func (c *Client) PostAccount(ctx context.Context, name string) (*Account, error) {
-	r, err := c.service.PostAccount{
+	r, err := c.service.PostAccount(
 		ctx,
 		&pb.PostAccountRequest{Name: name},
-	}
+	)
 
 	if err != nil {
 		return nil, err
